@@ -1,4 +1,4 @@
-from simulate_states import state
+from simulate_election import state
 
 party = 'rep'
 
