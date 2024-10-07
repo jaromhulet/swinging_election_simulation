@@ -1,6 +1,6 @@
 from state_info import states_dict
 import pandas as pd
-import simulat_election as sim
+import election_simulations as sim
 
 state_abbreviations = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
@@ -14,8 +14,8 @@ swinging_states_df = pd.DataFrame()
 
 for abbrv in state_abbreviations:
 
-    test_sim = sim.simulate_state_votes(states_dict,
-                                        abbrv)
+    test_sim = sim.simulate_election(states_dict,
+                                     abbrv)
 
     swing = test_sim.simulate_multiple_times(100000, 'national')
     # swing = test_sim.simulate_multiple_times(5000000, 'state')
