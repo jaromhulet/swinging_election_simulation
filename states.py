@@ -106,27 +106,4 @@ class state():
         else:
             swing_vote = False
 
-        return swing_vote        
-    
-
-class simulate_state_votes():
-
-    def __init__(self,
-                 state_dict,
-                 resid_state,
-                 elect_votes_to_win = 270):
-        
-        '''
-            state_dict (dictionary) : list of instances of state class
-            resid_state (str)       : state abbreviation for the single 
-                                       potential swing vote
-            elect_votes_to_win (int) : number of electoral votes to win
-                                       default to 270
-
-        '''
-        
-        self.state_dict = state_dict
-        self.resid_state = resid_state
-        self.elect_votes_to_win = elect_votes_to_win
-
-        return
+        return swing_vote
