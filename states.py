@@ -1,13 +1,5 @@
 import numpy as np
 from scipy.stats import binom
-import time
-
-def calc_time(start_time, end_time, string = ''):
-
-    execution_time = end_time - start_time
-    print(f"Execution time for {string}: {execution_time} seconds")
-
-    return
 
 class state():
 
