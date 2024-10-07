@@ -1,6 +1,6 @@
 from states import state
 
-class simulate_state_votes():
+class simulate_election():
 
     def __init__(self,
                  state_dict,
