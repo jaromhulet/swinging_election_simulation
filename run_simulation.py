@@ -14,7 +14,7 @@ swinging_states_df = pd.DataFrame()
 
 for abbrv in state_abbreviations:
 
-    test_sim = sim.simulate_election(states_dict,
+    test_sim = sim.simulate_elections(states_dict,
                                      abbrv)
 
     swing = test_sim.simulate_multiple_times(100000, 'national')
