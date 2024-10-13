@@ -1,5 +1,13 @@
 import numpy as np
 from scipy.stats import binom
+import time
+
+def calc_time(start_time, end_time, string = ''):
+
+    execution_time = end_time - start_time
+    print(f"Execution time for {string}: {execution_time} seconds")
+
+    return
 
 class state():
 
@@ -41,13 +49,15 @@ class state():
         if self.party == 'dem':
             self.vote_prob = self.vote_prob_dem / sum_dem_rep
         else:
-            self.vote_prob = self.vote_prob_repub / sum_dem_rep
-
-        # simulate the number of voters that turn out
-        self.actual_voters = np.random.binomial(n = self.reg_voters,
-                                                p = self.vote_prob)            
+            self.vote_prob = self.vote_prob_repub / sum_dem_rep          
 
         return
+    
+    def simulate_voter_turnout(self):
+
+        actual_voters = np.random.binomial(n = self.reg_voters,
+                                           p = self.vote_prob)
+        return actual_voters
     
     def simulate_election(self):
         
@@ -60,11 +70,11 @@ class state():
                 elect_points_won (int) : if the candidate wins the state, this is 
                                          the self.elect_votes else, it is 0        
         '''
-
-        votes_for_candidate = np.random.binomial(1, self.vote_prob, self.actual_voters)
+        actual_voters = self.simulate_voter_turnout()
+        votes_for_candidate = np.random.binomial(1, self.vote_prob, actual_voters)
 
         # see if votes for candidate is greater than 50% of actual voters
-        if np.sum(votes_for_candidate) > 0.5*self.actual_voters:
+        if np.sum(votes_for_candidate) > 0.5*actual_voters:
             return self.elect_votes
         else:
             return 0
@@ -84,13 +94,15 @@ class state():
                                     election, False otherwise
         
         '''
+
+        actual_voters = self.simulate_voter_turnout()
         # if actual_voters is odd, there is no chance of swinging the election
-        if (self.actual_voters % 2 != 0) and (self.exclude_odd_vote_results):
+        if (actual_voters % 2 != 0) and (self.exclude_odd_vote_results):
             swing_vote = False
             return swing_vote
 
         # calculate probability of a tie using binomial distribution
-        prob_of_tie = binom.pmf(int(self.actual_voters*0.5), self.actual_voters, self.vote_prob)
+        prob_of_tie = binom.pmf(int(actual_voters*0.5), actual_voters, self.vote_prob)
         rand_num = np.random.rand()
 
         if rand_num <= prob_of_tie:
